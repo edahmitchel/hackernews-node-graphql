@@ -1,6 +1,8 @@
 const { ApolloServer } = require('apollo-server');
 const fs = require('fs');
 const path = require('path');
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
 // 1
 let links = [{
     id: 'link-0',
@@ -86,7 +88,9 @@ const server = new ApolloServer({
         path.join(__dirname, 'schema.graphql'),
         'utf8'
       ),
-  resolvers,
+  resolvers,context:{
+    prisma
+  }
 })
 
 server
